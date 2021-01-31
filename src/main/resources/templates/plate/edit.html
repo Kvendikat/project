@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Изменение параметров заготовки')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/plate/save/} + ${plate.id}" method="post" th:object="${plate}">
+            <div class="form-group form-row align-items-center col-12">
+                <input style="display: none"
+                       id="id"
+                       type="text"
+                       th:field="*{id}"/>
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="number"
+                           class="col-form-label">Номер заготовки
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="number"
+                           type="text"
+                           th:field="*{number}"
+                           class="form-control form-control-plaintext"
+                           readonly/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="length"
+                           class="col-form-label">Длина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="length"
+                           type="number"
+                           step="1"
+                           th:field="*{length}"
+                           class="form-control"
+                           placeholder="Введите длину заготовки"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="width"
+                           class="col-form-label">Ширина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="width"
+                           type="number"
+                           step="1"
+                           th:field="*{width}"
+                           class="form-control"
+                           placeholder="Введите ширину заготовки"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="height"
+                           class="col-form-label">Толщина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="height"
+                           type="number"
+                           step="1"
+                           th:field="*{height}"
+                           class="form-control"
+                           placeholder="Введите толщину заготовки"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="paramOne"
+                           class="col-form-label">Параметр 1
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="paramOne"
+                           type="number"
+                           step="0.1"
+                           th:field="*{paramOne}"
+                           class="form-control"
+                           placeholder="Введите параметр 1"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="paramTwo"
+                           class="col-form-label">Параметр 2
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="paramTwo"
+                           type="number"
+                           step="0.1"
+                           th:field="*{paramTwo}"
+                           class="form-control"
+                           placeholder="Введите параметр 2"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="hasCrack"
+                           class="col-form-label">Наличие трещин
+                    </label>
+                </div>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input id="hasCrack"
+                               type="checkbox"
+                               class="form-check-input"
+                               th:field="*{hasCrack}">
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="type"
+                           class="col-form-label">Тип заготовки
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="type" id="type" class="form-control">
+                        <option th:value="${plate.type.id}" selected>[[${plate.type.name}]]</option>
+                        <option
+                                th:each="type : ${types}"
+                                th:value="${type.id}"
+                                th:text="${type.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="material"
+                           class="col-form-label">Материал
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="material" id="material" class="form-control">
+                        <option th:value="${plate.material.id}" selected>[[${plate.material.name}]]</option>
+                        <option
+                                th:each="material : ${materials}"
+                                th:value="${material.id}"
+                                th:text="${material.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="note"
+                           class="col-form-label">Примечание
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="note"
+                           type="text"
+                           th:field="*{note}"
+                           class="form-control"
+                           placeholder="Введите примечание"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <a th:href="@{/plate/start}"
+                       class="btn btn-outline-secondary col-12" role="button">Назад</a>
+                </div>
+                <button type="submit" class="btn btn-outline-success col-3">Изменить</button>
+                <div class="col-3"></div>
+            </div>
+        </form>
+
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

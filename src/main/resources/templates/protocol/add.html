@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Добавление нового протокола')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/protocol/add}" method="post" th:object="${newProtocol}">
+            <h3 th:text="${'Протокол №  ' + newProtocol.number}" class="text-center"></h3>
+            <h4 th:text="'создан ' + ${#dates.format(newProtocol.date, 'dd.MM.yyyy')}" class="text-center"></h4>
+            <br>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="producer"
+                           class="col-form-label">Изготовитель
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="producer" id="producer"
+                            th:class="${errors.containsKey('producer')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}">
+                        <option value="" disabled selected>Введите изготовителя</option>
+                        <option
+                                th:each="producer : ${producers}"
+                                th:value="${producer.id}"
+                                th:text="${producer.name}"
+                        ></option>
+                    </select>
+                    <ul th:if="${errors.containsKey('producer')}">
+                        <li th:each="error : ${errors.get('producer')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="departmentBoss"
+                           class="col-form-label">Начальник отдела
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="departmentBoss" id="departmentBoss" class="form-control">
+                        <option th:value="${departmentBosses.get(0).id}" selected>[[${departmentBosses.get(0).name}]]</option>
+                        <option
+                                th:each="departmentBoss : ${departmentBosses}"
+                                th:value="${departmentBoss.id}"
+                                th:text="${departmentBoss.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="laboratoryBoss"
+                           class="col-form-label">Начальник лаборатории
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="laboratoryBoss" id="laboratoryBoss" class="form-control">
+                        <option th:value="${laboratoryBosses.get(0).id}" selected>[[${laboratoryBosses.get(0).name}]]</option>
+                        <option
+                                th:each="laboratoryBoss : ${laboratoryBosses}"
+                                th:value="${laboratoryBoss.id}"
+                                th:text="${laboratoryBoss.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="note"
+                           class="col-2 col-form-label">Примечание
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input type="text"
+                           id="note"
+                           th:field="*{note}"
+                           th:class="form-control"
+                           placeholder="Введите примечание"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-middle align col-12">
+                <div class="col-4"></div>
+                    <button type="submit" class="btn btn-outline-success col-3">Добавить</button>
+                <div class="col-4"></div>
+            </div>
+
+        </form>
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

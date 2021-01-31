@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Протоколы')}"></head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="form-group row align-items-center align col-12">
+        <div class="col-3">
+            <a th:href="@{/protocol/start}"
+               class="btn btn-outline-secondary col-12" role="button">Назад</a>
+        </div>
+        <div class="col-4">
+            <a type="button" class="btn btn-outline-success"
+               th:href="@{/protocol/view-create/{protocolId}(protocolId = ${protocol.id})}">
+                Сохранить в Excel
+            </a>
+        </div>
+        <div class="col-5"></div>
+    </div>
+
+    <div class="form-group text-center col-12">
+        <h3>АКТ № [[${protocol.number}]] от [[${#dates.format(protocol.date, 'dd.MM.yyyy')}]]</h3>
+        <h3>передачи заготовок на [[${protocol.producer.name}]]</h3>
+        <h3 th:if="${protocol.note}" th:text="${protocol.note}"></h3>
+    </div>
+
+    <table class="table table-bordered text-center table-hover" align="center">
+        <thead class="thead-light">
+        <tr>
+            <th>№</th>
+            <th>№ заготовки</th>
+            <th>Длина</th>
+            <th>Ширина</th>
+            <th>Толщина</th>
+            <th>Примечание</th>
+        </tr>
+        </thead>
+        <tbody class="align-middle">
+        <tr th:each="plate : ${protocol.plates}">
+            <td th:text="${plateStat.count}"></td>
+            <td th:text="${plate.number}"></td>
+            <td th:text="${plate.length}"></td>
+            <td th:text="${plate.width}"></td>
+            <td th:text="${plate.height}"></td>
+            <td th:if="${plate.whatFor != null}"
+                th:text="${plate.whatFor.type} + ' - ' + ${plate.whatFor.quantity} + ' шт.'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:replace="~{fragments/js-connect::js-connect}"></div>
+
+</div>
+</body>

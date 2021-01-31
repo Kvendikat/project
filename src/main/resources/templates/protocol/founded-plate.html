@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Заготовки для протокола')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div th:if="${#lists.isEmpty(findingPlates)}">
+            <h2>По Вашему запросу ничего не найдено(:</h2>
+        </div>
+        <div th:if="${not #lists.isEmpty(findingPlates)}">
+            <h2>Результат поиска</h2>
+            <table class="table table-bordered text-center table-hover" align="center">
+                <thead class="thead-light">
+                <tr>
+                    <th>№ п/п</th>
+                    <th>№ заготовки</th>
+                    <th>Длина, мм</th>
+                    <th>Ширина, мм</th>
+                    <th>Толщина, мм</th>
+                    <th>Параметр 1</th>
+                    <th>Параметр 2</th>
+                    <th>Наличие трещин</th>
+                    <th>Тип заготовки</th>
+                    <th>Примечание</th>
+                    <th>Добавить в протокол</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                <tr th:each="plate : ${findingPlates}">
+                    <td th:text="${plateStat.count}"></td>
+                    <td th:text="${plate.number}"></td>
+                    <td th:text="${plate.length}"></td>
+                    <td th:text="${plate.width}"></td>
+                    <td th:text="${plate.height}"></td>
+                    <td th:text="${plate.paramOne}"></td>
+                    <td th:text="${plate.paramTwo}"></td>
+                    <td th:if="${plate.hasCrack}" style="color: red">да</td>
+                    <td th:unless="${plate.hasCrack}" style="color: green">нет</td>
+                    <td th:text="${plate.type.name}"></td>
+                    <td th:text="${plate.note}"></td>
+                    <td>
+                        <a th:href="@{/protocol/founded-platePost/{protocolId}/{plateId}
+                                (protocolId = ${protocol.id}, plateId = ${plate.id})}">
+                            <i style="color: green" class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <a th:href="@{/protocol/add-plate/{protocolId} (protocolId = ${protocol.id})}" class="btn btn-success" role="button">
+            Назад
+        </a>
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

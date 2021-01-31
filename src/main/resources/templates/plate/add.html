@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Добавление новой заготовки')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/plate/add}"  method="post" th:object="${newPlate}">
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="number"
+                           class="col-form-label">Номер заготовки
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="number"
+                           type="text"
+                           th:field="*{number}"
+                           th:class="${errors.containsKey('number')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите номер заготовки"/>
+                    <ul th:if="${errors.containsKey('number')}">
+                        <li th:each="error : ${errors.get('number')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="length"
+                           class="col-form-label">Длина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="length"
+                           type="number"
+                           step="1"
+                           th:field="*{length}"
+                           th:class="${errors.containsKey('length')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите длину заготовки"/>
+                    <ul th:if="${errors.containsKey('length')}">
+                        <li th:each="error : ${errors.get('length')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="width"
+                           class="col-form-label">Ширина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="width"
+                           type="number"
+                           step="1"
+                           th:field="*{width}"
+                           th:class="${errors.containsKey('width')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите ширину заготовки"/>
+                    <ul th:if="${errors.containsKey('width')}">
+                        <li th:each="error : ${errors.get('width')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="height"
+                           class="col-form-label">Толщина, мм
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="height"
+                           type="number"
+                           step="1"
+                           th:field="*{height}"
+                           th:class="${errors.containsKey('height')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите толщину заготовки"/>
+                    <ul th:if="${errors.containsKey('height')}">
+                        <li th:each="error : ${errors.get('height')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="paramOne"
+                           class="col-form-label">Параметр 1</label>
+                </div>
+                <div class="col-4">
+                    <input id="paramOne"
+                           type="number"
+                           step="0.1"
+                           th:field="*{paramOne}"
+                           th:class="${errors.containsKey('paramOne')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите величину параметра 1"/>
+                    <ul th:if="${errors.containsKey('paramOne')}">
+                        <li th:each="error : ${errors.get('paramOne')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="paramTwo"
+                           class="col-form-label">Параметр 2
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="paramTwo"
+                           type="number"
+                           step="0.1"
+                           th:field="*{paramTwo}"
+                           th:class="${errors.containsKey('paramTwo')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите величину параметра 2"/>
+                    <ul th:if="${errors.containsKey('paramTwo')}">
+                        <li th:each="error : ${errors.get('paramTwo')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="hasCrack"
+                           class="col-form-label">Наличие трещин
+                    </label>
+                </div>
+                <div class="col-4">
+                    <div class="form-check">
+                        <input id="hasCrack"
+                               type="checkbox"
+                               class="form-check-input"
+                               th:field="*{hasCrack}">
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="type"
+                           class="col-form-label">Тип заготовки
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="type" id="type" class="form-control">
+<!--                        <option th:value="${types.get(0).id}" selected>[[${types.get(0).name}]]</option>-->
+                        <option
+                                th:each="type : ${types}"
+                                th:value="${type.id}"
+                                th:text="${type.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="material"
+                           class="col-form-label">Материал
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="material" id="material" class="form-control">
+<!--                        <option value="" disabled selected>Выберите материал заготовки</option>-->
+                        <option
+                                th:each="material : ${materials}"
+                                th:value="${material.id}"
+                                th:text="${material.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="note"
+                           class="col-form-label">Примечание
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="note"
+                           type="text"
+                           th:field="*{note}"
+                           class="form-control"
+                           placeholder="Введите примечание"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <a th:href="@{/plate/start}"
+                       class="btn btn-outline-secondary col-12" role="button">Назад</a>
+                </div>
+                <button type="submit" class="btn btn-outline-success col-3">Добавить</button>
+                <div class="col-3"></div>
+            </div>
+        </form>
+
+
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

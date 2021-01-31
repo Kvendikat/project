@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Пользователи')}"></head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <table class="table table-bordered text-center table-hover" align="center">
+        <thead class="thead-dark">
+        <tr>
+            <th>№ п/п</th>
+            <th>Имя пользователя</th>
+            <th>ФИО</th>
+            <th>Должность</th>
+            <th>Роли</th>
+            <th>Редактировать</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody class="align-middle">
+        <tr th:each="user : ${items}">
+            <td th:text="${userStat.count} + ${page} * ${pageValue}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.login}"></td >
+            <td th:text="${user.position}"></td >
+            <td>
+                <ul th:each="role : ${user.roles}">
+                    <li th:text="${role.name}"></li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/admin/user/edit/{id}(id = ${user.id})}">
+                    <i style="color: black" class="fa fa-pencil-alt" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/admin/user/delete/{id}(id = ${user.id})}">
+                    <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/user/add/}" class="btn btn-outline-success" role="button">Добавить нового пользователя</a>
+    <br/>
+    <br/>
+    <nav>
+        <ul class="pagination">
+            <li th:class="${page == 0 ? 'page-item disabled' : 'page-item'}">
+                <a th:href="@{/admin/user/start(page=${page - 1})}" class="page-link">&laquo;</a>
+            </li>
+            <li th:each="p : ${pagesRange}" th:class="${p == page ? 'page-item active' : 'page-item'}">
+                <a th:href="@{/admin/user/start(page=${p})}" class="page-link" th:text="${p + 1}"></a>
+            </li>
+            <li th:class="${page == pages - 1 ? 'page-item disabled' : 'page-item'}">
+                <a th:href="@{/admin/user/start(page=${page + 1})}" class="page-link">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+    <div th:replace="~{fragments/js-connect::js-connect}"></div>
+</div>
+</body>

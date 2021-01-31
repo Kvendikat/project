@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Добавление нового применения')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/admin/what-for/add}"  method="post" th:object="${newWhatFor}">
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="type"
+                           class="col-form-label">Применение
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="type"
+                           type="text"
+                           th:field="*{type}"
+                           th:class="${errors.containsKey('type')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите примение заготовки"/>
+                    <ul th:if="${errors.containsKey('type')}">
+                        <li th:each="error : ${errors.get('type')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="quantity"
+                           class="col-form-label">Количество деталей
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="quantity"
+                           type="number"
+                           step="1"
+                           th:field="*{quantity}"
+                           th:class="${errors.containsKey('quantity')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите количество изготавливаемых деталей"/>
+                    <ul th:if="${errors.containsKey('quantity')}">
+                        <li th:each="error : ${errors.get('quantity')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-4"></div>
+                <button type="submit" class="btn btn-outline-success col-4">Добавить</button>
+                <div class="col-4"></div>
+            </div>
+        </form>
+
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

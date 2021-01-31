@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Отчет за месяц')}"></head>
+<body>
+<div class="container">
+    <div class="text-center" th:replace="~{fragments/header::header}"></div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <di class="row">
+        <div class="col-10"></div>
+        <div class="col-2">
+            <a type="button" class="btn btn-outline-success form-control-lg"
+               th:href="@{/general-view-create}">
+               Сохранить в Excel
+            </a>
+        </div>
+    </di>
+
+    <h2 class="text-center">Данные о наличии заготовок на [[${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}]]</h2>
+    <br/>
+    <table class="table table-bordered text-center table-hover" align="center">
+        <thead class="thead-light">
+        <tr>
+            <th>Заготовки на складе, шт.</th>
+            <th>Заготовки группы 1, шт.</th>
+            <th>Заготовки группы 2, шт.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>[[${countAllPlatesInStorage}]]</td>
+            <td>[[${countPlatesWithoutStrain}]]</td>
+            <td>[[${countPlatesWithStrain}]]</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-5">
+            <h4 class="text-center">Заготовки в наличии</h4>
+            <table class="table table-bordered text-center table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>Материал</th>
+                    <th>Размер,&nbsp;мм</th>
+                    <th>Группа</th>
+                    <th>Количество,&nbsp;шт.</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                    <tr th:each = "count : ${countPlatesWithoutProducerToGroups}">
+                        <td th:text="${count.materialName}"></td>
+                        <td th:text="${count.typeName}"></td>
+                        <td th:unless="${count.groupName}">I</td>
+                        <td th:if="${count.groupName}">II</td>
+                        <td th:text="${count.countPlates}"></td>
+                    </tr>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col"></div>
+
+        <div th:if="${#lists.isEmpty(countTakeToProducerThisMonthToGroups)}" class="col-6">
+            <h4 class="text-center">
+                <br/>
+                <br/>
+                За [[${#dates.monthName(#dates.createNow())}]] ничего не передавали
+            </h4>
+        </div>
+        <div class="col-6">
+            <h4 th:unless="${#lists.isEmpty(countTakeToProducerThisMonthToGroups)}" class="text-center">
+                Передано заготовок за [[${#dates.monthName(#dates.createNow())}]]
+            </h4>
+            <table class="table table-bordered text-center table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>Изготовитель</th>
+                    <th>Материал</th>
+                    <th>Размер,&nbsp;мм</th>
+                    <th>Группа</th>
+                    <th>Количество,&nbsp;шт.</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                <tr th:each = "count : ${countTakeToProducerThisMonthToGroups}">
+                    <td th:text="${count.producerName}"></td>
+                    <td th:text="${count.materialName}"></td>
+                    <td th:text="${count.typeName}"></td>
+                    <td th:unless="${count.groupName}">I</td>
+                    <td th:if="${count.groupName}">II</td>
+                    <td th:text="${count.countPlates}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <div th:if="${#lists.isEmpty(platesInThisMonthToGroups)}">
+        <br/>
+        <h4 class="text-center">За [[${#dates.monthName(#dates.createNow())}]] новых заготовок проконтролированно не было</h4>
+    </div>
+    <div th:unless="${#lists.isEmpty(platesInThisMonthToGroups)}">
+        <div class="row col-12 align-middle">
+            <h4 class="text-center">Проконтролированно заготовок за [[${#dates.monthName(#dates.createNow())}]]</h4>
+        </div>
+            <br/>
+        <div class="row align-middle">
+            <table class="table table-bordered text-center table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>Материал</th>
+                    <th>Размер,&nbsp;мм</th>
+                    <th>Группа</th>
+                    <th>Количество,&nbsp;шт.</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                <tr th:each = "count : ${platesInThisMonthToGroups}">
+                    <td th:text="${count.materialName}"></td>
+                    <td th:text="${count.typeName}"></td>
+                    <td th:unless="${count.groupName}">I</td>
+                    <td th:if="${count.groupName}">II</td>
+                    <td th:text="${count.countPlates}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<div th:replace="~{fragments/js-connect::js-connect}"></div>
+</div>
+</body>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Доступ запрещен')}"></head>
+<body>
+    <div class="container">
+        <div class="text-center" th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h1>Неправильное имя пользователя или пароль(:</h1>
+        <br/>
+        <a type="button" class="btn btn-outline-success form-control-lg"
+           th:href="@{/login}">
+            Попробовать еще раз
+        </a>
+        <img src="/images/upload/denied.jpg" class="d-block w-100">
+    </div>
+</body>

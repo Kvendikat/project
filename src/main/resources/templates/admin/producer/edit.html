@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Редактирование пользователя')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+    <br/>
+    <br/>
+    <br/>
+        <br/>
+        <form th:action="@{/admin/producer/save/} + ${producer.id}" method="post" th:object="${producer}">
+            <input style="display: none"
+                   type="text"
+                   id="id"
+                   th:field="*{id}"
+                   readonly>
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="name"
+                           class="col-2 col-form-label">Название производителя
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input type="text"
+                           id="name"
+                           th:field="*{name}"
+                           class="form-control form-control-plaintext"
+                           readonly>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="surname"
+                           class="col-2 col-form-label">ФИО представителя
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input type="text"
+                           id="surname"
+                           th:field="*{surname}"
+                           th:class="${errors.containsKey('surname')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите  ФИО (в формате И.О. Фамилия)"/>
+                    <ul th:if="${errors.containsKey('surname')}">
+                        <li th:each="error : ${errors.get('surname')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="position"
+                           class="col-2 col-form-label">Должность
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input type="text"
+                           id="position"
+                           th:field="*{position}"
+                           th:class="${errors.containsKey('position')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите должность"/>
+                    <ul th:if="${errors.containsKey('position')}">
+                        <li th:each="error : ${errors.get('position')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <a th:href="@{/admin/producer/start/}" class="btn btn-outline-secondary col-12" role="button">Назад</a>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-outline-success col-12">Сохранить</button>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </form>
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

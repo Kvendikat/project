@@ -1,0 +1,72 @@
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+     xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+        <a class="navbar-brand" href="/view">
+            <img src="/images/upload/label.jpg" style="width:50px"; class="rounded-circle d-inline-block align-content-center" alt="">
+            База материала
+        </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Администрирование
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown1" >
+                    <a class="dropdown-item" th:href="@{/admin/user/start}">Активные пользователи</a>
+                    <a class="dropdown-item" th:href="@{/admin/user/archive}">Архив пользователей</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/admin/producer/start}">Активные изготовители</a>
+                    <a class="dropdown-item" th:href="@{/admin/producer/archive}">Архив изготовителей</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/admin/material/start}">Активные материалы</a>
+                    <a class="dropdown-item" th:href="@{/admin/material/archive}">Архив материалов</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/admin/type/start}">Активные типоразмеры</a>
+                    <a class="dropdown-item" th:href="@{/admin/type/archive}">Архив типоразмеров</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/admin/what-for/start}">Активные применения</a>
+                    <a class="dropdown-item" th:href="@{/admin/what-for/archive}">Архив применений</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Протоколы
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown3" >
+                    <a class="dropdown-item" th:href="@{/protocol/start}">Оформленные</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/protocol/add/}">Новый протокол</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Заготовки
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
+                    <a class="dropdown-item" th:href="@{/plate/start}">На складе</a>
+                    <a class="dropdown-item" th:href="@{/plate/archive}">Переданные</a>
+                    <a class="dropdown-item" th:href="@{/plate/crash}">Изолятор брака</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/plate/find}">Поиск</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/plate/add}">Новая заготовка</a>
+                </div>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="nav-link">  Войти</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <strong class="navbar-text">  Здравствуйте, </strong>
+                <strong sec:authentication="name" class="navbar-text"></strong>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}" class="nav-link">Выйти</a>
+            </li>
+        </ul>
+    </div>
+</nav>

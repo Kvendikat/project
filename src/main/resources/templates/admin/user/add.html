@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Добавление нового пользователя')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/admin/user/add}"  method="post" th:object="${newUser}">
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="username"
+                           class="col-form-label">Имя пользователя
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="username"
+                           type="text"
+                           th:field="*{username}"
+                           th:class="${errors.containsKey('username')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите имя пользователя"/>
+                    <ul th:if="${errors.containsKey('username')}">
+                        <li th:each="error : ${errors.get('username')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="login"
+                           class="col-2 col-form-label">ФИО
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="login"
+                           type="text"
+                           th:field="*{login}"
+                           th:class="${errors.containsKey('login')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите ФИО (Фамилия И.О.)"/>
+                    <ul th:if="${errors.containsKey('login')}">
+                        <li th:each="error : ${errors.get('login')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="password"
+                           class="col-2 col-form-label">Пароль
+                    </label>
+                </div>
+                <div class="col-4">
+                <input id="password"
+                       type="text"
+                       th:field="*{password}"
+                       th:class="${errors.containsKey('password')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                       placeholder="Введите пароль"/>
+                <ul th:if="${errors.containsKey('password')}">
+                    <li th:each="error : ${errors.get('password')}" th:text="${error}" style="color: darkred"></li>
+                </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="position"
+                           class="col-2 col-form-label">Должность
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="position"
+                           type="text"
+                           th:field="*{position}"
+                           th:class="${errors.containsKey('position')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите должность"/>
+                    <ul th:if="${errors.containsKey('position')}">
+                        <li th:each="error : ${errors.get('position')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-content-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2 col-form-label">Роли пользователя</div>
+                <div class="col-4">
+                    <div class="custom-control custom-switch" th:each="role : ${roles}">
+                        <input th:id="${role}"
+                               type="checkbox"
+                               class="custom-control-input"
+                               th:disabled="${role.name} == 'Официант'"
+                               th:field="*{stringRoles}"
+                               th:value="${role}"/>
+                        <label th:for="${role}"
+                               class="custom-control-label"
+                               th:text="${role.name}">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-4"></div>
+                <button type="submit" class="btn btn-outline-success col-4">Добавить</button>
+                <div class="col-4"></div>
+            </div>
+        </form>
+
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

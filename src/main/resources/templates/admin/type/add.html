@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Добавление нового типоразмера')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/admin/type/add}"  method="post" th:object="${newType}">
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="name"
+                           class="col-form-label">Типоазмер
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input id="name"
+                           type="text"
+                           th:field="*{name}"
+                           th:class="${errors.containsKey('name')
+                           ? 'form-control is-invalid'
+                           : 'form-control'}"
+                           placeholder="Введите типоразмер"/>
+                    <ul th:if="${errors.containsKey('name')}">
+                        <li th:each="error : ${errors.get('name')}" th:text="${error}" style="color: darkred"></li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-4"></div>
+                <button type="submit" class="btn btn-outline-success col-4">Добавить</button>
+                <div class="col-4"></div>
+            </div>
+        </form>
+
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

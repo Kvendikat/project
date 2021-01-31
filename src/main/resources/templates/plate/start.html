@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Заготовки')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <table class="table table-bordered text-center table-hover" align="center">
+            <thead class="thead-light">
+            <tr>
+                <th>№</th>
+                <th>№ заготовки</th>
+                <th>Длина, мм</th>
+                <th>Ширина, мм</th>
+                <th>Толщина, мм</th>
+                <th>Параметр 1</th>
+                <th>Параметр 2</th>
+                <th>Наличие трещин</th>
+                <th>Тип заготовки</th>
+                <th>Примечание</th>
+                <th>Редактировать</th>
+                <th>Брак</th>
+            </tr>
+            </thead>
+            <tbody class="align-middle">
+            <tr th:each="plate : ${plates}">
+                <td th:text="${plateStat.count}"></td>
+                <td th:text="${plate.number}"></td>
+                <td th:text="${plate.length}"></td>
+                <td th:text="${plate.width}"></td>
+                <td th:text="${plate.height}"></td>
+                <td th:text="${plate.paramOne}"></td>
+                <td th:text="${plate.paramTwo}"></td>
+                <td th:if="${plate.hasCrack}" style="color: red">да</td>
+                <td th:unless="${plate.hasCrack}" style="color: green">нет</td>
+                <td th:text="${plate.type.name}"></td>
+                <td th:text="${plate.note}"></td>
+                <td>
+                    <a th:href="@{/plate/edit/{plateId}/ (plateId = ${plate.id})}">
+                        <i style="color: black" class="fa fa-pencil-alt" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/plate/delete/{plateId}/(plateId = ${plate.id})}">
+                       <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>

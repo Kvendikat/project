@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Тип заготовки')}"></head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <table class="table table-bordered text-center table-hover" align="center">
+        <thead class="thead-dark">
+        <tr>
+            <th>№ п/п</th>
+            <th>Размеры</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody class="align-middle">
+        <tr th:each="type : ${items}">
+            <td th:text="${typeStat.count} + ${page} * ${pageValue}"></td>
+            <td th:text="${type.name}"></td>
+            <td>
+                <a th:href="@{/admin/type/delete/{id}(id = ${type.id})}">
+                    <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/type/add/}" class="btn btn-outline-success" role="button">Добавить новый типоразмер заготовки</a>
+    <br/>
+    <br/>
+    <nav>
+        <ul class="pagination">
+            <li th:class="${page == 0 ? 'page-item disabled' : 'page-item'}">
+                <a th:href="@{/admin/type/start(page=${page - 1})}" class="page-link">&laquo;</a>
+            </li>
+            <li th:each="p : ${pagesRange}" th:class="${p == page ? 'page-item active' : 'page-item'}">
+                <a th:href="@{/admin/type/start(page=${p})}" class="page-link" th:text="${p + 1}"></a>
+            </li>
+            <li th:class="${page == pages - 1 ? 'page-item disabled' : 'page-item'}">
+                <a th:href="@{/admin/type/start(page=${page + 1})}" class="page-link">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+    <div th:replace="~{fragments/js-connect::js-connect}"></div>
+</div>
+</body>

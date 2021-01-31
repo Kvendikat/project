@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head::head('Редактирование пользователя')}"></head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form th:action="@{/protocol/save/{protocolId} (protocolId = ${protocol.id})}" method="post" th:object="${protocol}">
+            <h3 th:text="${'Протокол №  ' + protocol.number}" class="text-center"></h3>
+            <h4 th:text="'создан ' + ${#dates.format(protocol.date, 'dd.MM.yyyy')}" class="text-center"></h4>
+            <br>
+<!--            Передаю номер и дату которая была-->
+            <div style="display:none">
+                <input type="text"
+                       id="number"
+                       th:field="*{number}"
+                       th:value=${protocol.number}>
+
+                <input type="date"
+                       id="date"
+                       th:field="*{date}"
+                       th:value=${protocol.date}>
+
+                <input type="text"
+                       id="user"
+                       th:field="*{user}"
+                       th:value=${protocol.user.id}>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="producer"
+                           class="col-form-label">Производитель
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="producer" id="producer" class="form-control">
+                        <option th:value="${protocol.producer.id}" selected>[[${protocol.producer.name}]]</option>
+                        <option
+                                th:each="producer : ${producers}"
+                                th:value="${producer.id}"
+                                th:text="${producer.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="departmentBoss"
+                           class="col-form-label">Начальник отдела
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="departmentBoss" id="departmentBoss" class="form-control">
+                        <option th:value="${protocol.departmentBoss.id}" selected>[[${protocol.departmentBoss.name}]]</option>
+                        <option
+                                th:each="departmentBoss : ${departmentBosses}"
+                                th:value="${departmentBoss.id}"
+                                th:text="${departmentBoss.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group form-row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="laboratoryBoss"
+                           class="col-form-label">Начальник участка
+                    </label>
+                </div>
+                <div class="col-4>">
+                    <select name="laboratoryBoss" id="laboratoryBoss" class="form-control">
+                        <option th:value="${protocol.laboratoryBoss.id}" selected>[[${protocol.laboratoryBoss.name}]]</option>
+                        <option
+                                th:each="laboratoryBoss : ${laboratoryBosses}"
+                                th:value="${laboratoryBoss.id}"
+                                th:text="${laboratoryBoss.name}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <label for="note"
+                           class="col-2 col-form-label">Примечание
+                    </label>
+                </div>
+                <div class="col-4">
+                <input type="text"
+                       id="note"
+                       th:field="*{note}"
+                       th:class="form-control"
+                       placeholder="Введите примечание"/>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="form-group row align-items-center col-12">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <a th:href="@{/protocol/add-plate/{protocolId} (protocolId = ${protocol.id})}"
+                       class="btn btn-outline-primary col-12" role="button">Добавить заготовку</a>
+                </div>
+                <div class="col-4"></div>
+            </div>
+
+            <div class="form-group row align-items-center align col-12">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <a th:href="@{/protocol/start/}"
+                       class="btn btn-outline-secondary col-12" role="button">Назад</a>
+                </div>
+                <button type="submit" class="btn btn-outline-success col-3">Изменить</button>
+                <div class="col-3"></div>
+            </div>
+        </form>
+        <div class="form-group row text-center justify-content-center"
+             th:if="${#lists.size(protocol.plates) > 0}">
+            <table class="table table-bordered text-center table-hover" align="center">
+                <thead class="thead-light align-items-center align-self-center">
+                <tr>
+                    <th>№&nbsp;п&zwj;/&zwj;п</th>
+                    <th>№&nbsp;заготовки</th>
+                    <th>Длина,&nbsp;мм</th>
+                    <th>Ширина,&nbsp;мм</th>
+                    <th>Толщина,&nbsp;мм</th>
+                    <th>Параметр 1</th>
+                    <th>Параметр 2</th>
+                    <th>Наличие трещин</th>
+                    <th>Примечание</th>
+                    <th>Тип&nbsp;и&nbsp;кол&#8209;во&nbsp;изготавливаемых&nbsp;деталей</th>
+                    <th>Удалить</th>
+                </tr>
+                </thead>
+                <tbody class="align-items-center align-self-center justify-content-center">
+                <tr th:each="plate : ${protocol.plates}">
+                    <td th:text="${plateStat.count}"></td>
+                    <td th:text="${plate.number}"></td>
+                    <td th:text="${plate.length}"></td>
+                    <td th:text="${plate.width}"></td>
+                    <td th:text="${plate.height}"></td>
+                    <td th:text="${plate.paramOne}"></td>
+                    <td th:text="${plate.paramTwo}"></td>
+                    <td th:if="${plate.hasCrack}" style="color: red">да</td>
+                    <td th:unless="${plate.hasCrack}" style="color: green">нет</td>
+                    <td th:text="${plate.note}"></td>
+                    <td class="text-center align-items-center justify-content-center">
+                        <form class="form-inline" th:action="@{/plate/what-for/{protocolId}/{plateId}
+                                (protocolId = ${protocol.id}, plateId = ${plate.id})}"
+                              method="post">
+                            <div class="form-group row align-items-center justify-content-center col-12">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-success">
+                                        <i th:if=${plate.whatFor} class="fa fa-check" aria-hidden="true"></i>
+                                        <i th:unless=${plate.whatFor} class="fa fa-spinner" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <select name="whatFor" id="whatFor" class="form-control">
+                                    <option th:if="${plate.whatFor}" th:value="${plate.whatFor.id}"
+                                            selected>[[${plate.whatFor.type}]]</option>
+                                    <option
+                                            th:each="whatFor : ${whatFors}"
+                                            th:value="${whatFor.id}"
+                                            th:text="${whatFor.type}"
+                                    ></option>
+                                </select>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <a th:href="@{/protocol/return-plate/{plateId}(plateId = ${plate.id})}">
+                            <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/js-connect::js-connect}"></div>
+    </div>
+</body>
